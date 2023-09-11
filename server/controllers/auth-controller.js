@@ -1,15 +1,16 @@
 import { loginUser, logoutUser, refreshUserToken, registerUser } from '../services/user-service';
 import ApiError from '../utils/api-error';
+import { validationResult } from 'express-validator';
 
 
 export const registration = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return next(ApiError.BadRequest('validation error', errors.array()))
+      throw ApiError.BadRequest('validation error', errors.array())
     }
-    const { email, password } = req.body;
-    const userData = await registerUser(email, password);
+    const registrationData = req.body;
+    const userData = await registerUser(registrationData);
     res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
     return res.json(userData);
   } catch (e) {

@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/types/styled-jsx.d.ts"],
+  "include": ["src", "src/utils/styled-jsx.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

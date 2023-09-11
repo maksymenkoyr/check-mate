@@ -1,35 +1,36 @@
 import UserModel from '../models/user-model'
 import bcrypt from 'bcrypt'
 import ApiError from '../utils/api-error';
+import tokenService from './token-service'
 
-export const registerUser = async (username, email, password) => {
+export const registerUser = async ({ username, email, password }) => {
   const candidate = await UserModel.findOne({ email })
   if (candidate) {
     throw ApiError.BadRequest(`user with given email already exist`)
   }
+  // isUsernameFree(username)
   const hashPassword = await bcrypt.hash(password, 3);
 
   const user = await UserModel.create({ username, email, password: hashPassword })
 
-  const tokens = generateTokens({ ...userDto });
-  await tokenService.saveToken(userDto.id, tokens.refreshToken);
+  const tokens = tokenService.generateTokens({ ...user });
 
-  return { ...tokens, user: userDto }
+  return { ...tokens, user: user }
+
 }
 
 export const loginUser = async (email, password) => {
-  const user = await UserModel.findOne({ email })
+  const user = await User.findOne({ email })
   if (!user) {
     throw ApiError.BadRequest('user with given email is not found')
   }
-  const isPassEquals = await bcrypt.compare(password, user.password);
-  if (!isPassEquals) {
+  if (!await bcrypt.compare(password, user.password)) {
     throw ApiError.BadRequest('wrong password');
   }
-  const tokens = tokenService.generateTokens({ ...userDto });
+  const tokens = generateTokens({ ...user });
 
-  await tokenService.saveToken(userDto.id, tokens.refreshToken);
-  return { ...tokens, user: userDto }
+  await saveToken(user._id, tokens.refreshToken);
+  return { ...tokens, user }
 }
 
 export const logoutUser = async (refreshToken) => {
@@ -38,21 +39,20 @@ export const logoutUser = async (refreshToken) => {
 }
 
 export const refreshUserToken = async (refreshToken) => {
-  if (!refreshToken) {
-    throw ApiError.UnauthorizedError();
-  }
-  const userData = tokenService.validateRefreshToken(refreshToken);
-  const tokenFromDb = await tokenService.findToken(refreshToken);
-  if (!userData || !tokenFromDb) {
-    throw ApiError.UnauthorizedError();
-  }
-  const user = await UserModel.findById(userData.id);
-  const userDto = new UserDto(user);
-  const tokens = tokenService.generateTokens({ ...userDto });
+  try {
+    const userData = tokenService.validateRefreshToken(refreshToken);
+    const user = await UserModel.findById(userData._doc._id);
+    const tokens = tokenService.generateTokens({ ...user });
+    return { ...tokens, user }
 
-  await tokenService.saveToken(userDto.id, tokens.refreshToken);
-  return { ...tokens, user: userDto }
+  } catch (error) {
+    throw ApiError.ServerError('error while authorization', error)
+  }
+
 }
 
+export const isUsernameFree = async (username) => {
+  await UserModel.findById({ username })
+}
 
 
