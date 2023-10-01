@@ -4,16 +4,16 @@ import { IAuthResponse, ILoginData, IRegistrationData } from './types';
 
 import axios from 'axios';
 
-export const loginAPI = ({ email, password }: ILoginData): Promise<AxiosResponse<IAuthResponse>> => {
-  return api.post<IAuthResponse>('/login', { email, password })
+export const loginAPI = async ({ email, password }: ILoginData): Promise<AxiosResponse<IAuthResponse>> => {
+  return await api.post<IAuthResponse>('/login', { email, password })
 }
 
 export const registrationAPI = async (data: IRegistrationData): Promise<AxiosResponse<IAuthResponse>> => {
-  return api.post<IAuthResponse>('/registration', { ...data })
+  return await api.post<IAuthResponse>('/registration', { ...data })
 }
 
 export const logoutAPI = async (): Promise<void> => {
-  return api.post('/logout')
+  return await api.post('/logout')
 }
 
 export const refreshTokenAPI = async (): Promise<AxiosResponse<IAuthResponse>> => {

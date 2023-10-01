@@ -20,16 +20,16 @@ export const registerUser = async ({ username, email, password }) => {
 }
 
 export const loginUser = async (email, password) => {
-  const user = await User.findOne({ email })
+  const user = await UserModel.findOne({ email })
   if (!user) {
     throw ApiError.BadRequest('user with given email is not found')
   }
   if (!await bcrypt.compare(password, user.password)) {
     throw ApiError.BadRequest('wrong password');
   }
-  const tokens = generateTokens({ ...user });
+  const tokens = tokenService.generateTokens({ ...user });
 
-  await saveToken(user._id, tokens.refreshToken);
+  await tokenService.saveToken(user._id, tokens.refreshToken);
   return { ...tokens, user }
 }
 

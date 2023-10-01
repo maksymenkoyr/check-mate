@@ -1,10 +1,10 @@
 import React from 'react'
 import {colors} from '../../variables/styleVariables'
 
-const Button = ({children}: {children: string}) => {
+const Button = ({children, onClick}: {children: string, onClick: () => void}) => {
     return (
         <>
-            <button>{children}</button>
+            <button onClick={onClick}>{children}</button>
             <style jsx>
                 {`
                     button {

@@ -9,6 +9,7 @@ import errorMiddleware from './middlewares/error-middleware.js'
 import { login, refresh, registration } from './controllers/auth-controller.js'
 import { body } from 'express-validator'
 import cookieParser from 'cookie-parser'
+import { taskRouter } from './controllers/task-controller.js'
 
 app.use(cors({
   credentials: true,
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.post('/api/login', body('email').isEmail(), body('password').isLength({ min: 4 }), login)
 app.post('/api/registration', body('email').isEmail(), body('password').isLength({ min: 4 }), body('username').notEmpty(), registration)
+app.use('/api/tasks', taskRouter)
 app.get('/api/refresh', refresh)
 
 app.use(errorMiddleware)

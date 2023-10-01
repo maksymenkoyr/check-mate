@@ -1,5 +1,6 @@
-const ApiError = require('../exceptions/api-error');
-const tokenService = require('../service/token-service');
+import tokenService from '../services/token-service';
+import ApiError from '../utils/api-error';
+
 
 export default function (req, res, next) {
   try {

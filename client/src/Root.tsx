@@ -8,7 +8,7 @@ const Root = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(startSession())
-    })
+    }, [])
     return <Outlet />
 }
 

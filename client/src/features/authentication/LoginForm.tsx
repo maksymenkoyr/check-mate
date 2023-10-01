@@ -22,7 +22,6 @@ const LoginForm = () => {
     const onSubmit = (data: ILoginData) => {
         dispatch(loginUser(data))
     }
-    console.log('asd')
     return (
         <form className='form' onSubmit={handleSubmit(onSubmit)}>
             <div className='header'>
