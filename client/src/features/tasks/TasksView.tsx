@@ -7,18 +7,13 @@ import TaskList from './TaskList'
 import AddTask from './AddTask'
 
 const TasksView = () => {
-  const [tasks, setTasks] = useState<ITask[]>([])
+ 
   const [addTask, setAddTask] = useState<boolean>(false)
-  useEffect(() => {
-    getTasksAPI().then(res => {
-      setTasks(res.data)
-    })
-  }, [])
+  
   return (
     <>{addTask ? <AddTask finishAddingTask={()=> setAddTask(false)}/> : null}
       <TaskList></TaskList>
       <Button onClick={() => setAddTask(true)}> AddTask </Button>
-      {/* tasklist */}
     </>
   )
 }

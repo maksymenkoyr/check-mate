@@ -16,8 +16,9 @@ export const getAllTasks = async (req, res, next) => {
   try {
 
     const userId = req.user._id
-    const allTasks = taskService.getAllTasks(userId)
-    res.status(200).json(allTasks)
+    const allTasks = await taskService.getAllTasks(userId)
+    console.log(allTasks)
+    return res.status(200).json(allTasks)
   } catch (error) {
     next(error)
   }
