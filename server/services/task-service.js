@@ -3,8 +3,13 @@ import taskModel from '../models/task-model';
 
 export const taskService = {
 
-  addTask: async (userId, { taskName, description, likes }) => {
-    await taskModel.create({ user: userId, taskName, description, likes })
+  addTask: async (userId, taskData) => {
+    try {
+
+      return await taskModel.create({ user: userId, name: taskData.name, description: taskData.description, likes: [] })
+    } catch (error) {
+      console.log(error)
+    }
   },
 
   getAllTasks: async (userId) => {

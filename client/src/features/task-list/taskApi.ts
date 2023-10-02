@@ -5,6 +5,11 @@ import { ITask } from "./types"
 export const getTasksAPI = async (): Promise<AxiosResponse<ITask[]>> => {
   return await api.get('/tasks')
 }
-export const addTaskAPI = async (taskData: ITask): Promise<AxiosResponse<ITask>> => {
-  return await api.post('/tasks', taskData)
+
+type taskData = {
+  name: string;
+  description: null|string;
+}
+export const addTaskAPI = async (taskData: taskData): Promise<AxiosResponse<ITask>> => {
+  return await api.post('/tasks/add-task', taskData)
 }

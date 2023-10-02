@@ -1,5 +1,7 @@
 export interface ITask {
   taskName: string
-  description: string
+  description: string | null
   likes: number
 }
+
+

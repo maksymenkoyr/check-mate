@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose'
 
 const TaskSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  taskName: { type: String, required: true },
+  name: { type: String, required: true },
   description: {
     type: String
   },

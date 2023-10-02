@@ -10,6 +10,7 @@ type InputProps = {
 }
 
 const TextInput = ({type, label, register, error}: InputProps) => {
+    console.log(register)
     return (
         <div>
             <div className='label-wrapper'>
