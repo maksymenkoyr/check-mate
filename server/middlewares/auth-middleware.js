@@ -14,7 +14,8 @@ export default function (req, res, next) {
       return next(ApiError.UnauthorizedError());
     }
 
-    const userData = tokenService.validateAccessToken(accessToken);
+    const userData = tokenService.validateAccessToken(accessToken)._doc;
+    console.log(userData)
     if (!userData) {
       return next(ApiError.UnauthorizedError());
     }

@@ -35,6 +35,6 @@ const startServer = async () => {
   } catch (e) {
     console.log(e)
   }
-}
+} 
 
 startServer()

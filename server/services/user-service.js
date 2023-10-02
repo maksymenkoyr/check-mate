@@ -8,12 +8,13 @@ export const registerUser = async ({ username, email, password }) => {
   if (candidate) {
     throw ApiError.BadRequest(`user with given email already exist`)
   }
-  // isUsernameFree(username)
+
   const hashPassword = await bcrypt.hash(password, 3);
 
   const user = await UserModel.create({ username, email, password: hashPassword })
 
   const tokens = tokenService.generateTokens({ ...user });
+  tokenService.saveRefreshToken(tokens.refreshToken)
 
   return { ...tokens, user: user }
 
