@@ -1,16 +1,19 @@
-import {useEffect} from 'react'
-import {useAppDispatch, useAppSelector} from './hooks/redux'
-import {Navigate} from 'react-router-dom'
-import {startSession} from './features/authentication/authService'
-import TaskList from './features/tasks/TaskList'
+import { useAppSelector } from './hooks/redux'
+import { Navigate } from 'react-router-dom'
 import TaskView from './features/tasks/TasksView'
+import Search from './features/search/Search'
 
 function App() {
-    const {isAuthenticated} = useAppSelector(state => state.authReducer)
-    if (!isAuthenticated) {
-        return <Navigate to='/login' />
-    }
-    return <TaskView />
+  const { isAuthenticated } = useAppSelector(state => state.authReducer)
+  if (!isAuthenticated) {
+    return <Navigate to='/login' />
+  }
+  return (
+    <div>
+      <Search />
+      <TaskView />
+    </div>
+  )
 }
 
 export default App

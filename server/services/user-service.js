@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import ApiError from '../utils/api-error';
 import tokenService from './token-service'
 
-export const registerUser = async ({ username, email, password }) => {
+export const registerUser = async ({ name, email, password }) => {
   const candidate = await UserModel.findOne({ email })
   if (candidate) {
     throw ApiError.BadRequest(`user with given email already exist`)
@@ -11,7 +11,7 @@ export const registerUser = async ({ username, email, password }) => {
 
   const hashPassword = await bcrypt.hash(password, 3);
 
-  const user = await UserModel.create({ username, email, password: hashPassword })
+  const user = await UserModel.create({ name, email, password: hashPassword })
 
   const tokens = tokenService.generateTokens({ ...user });
   tokenService.saveRefreshToken(tokens.refreshToken)
@@ -52,8 +52,13 @@ export const refreshUserToken = async (refreshToken) => {
 
 }
 
-export const isUsernameFree = async (username) => {
-  await UserModel.findById({ username })
+export const isNameFree = async (name) => {
+  await UserModel.findById({ name })
+}
+
+export const findAllUsersByName = async (name) => {
+  console.log(name)
+  return await UserModel.find({ name: name })
 }
 
 
