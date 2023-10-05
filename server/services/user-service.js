@@ -57,8 +57,7 @@ export const isNameFree = async (name) => {
 }
 
 export const findAllUsersByName = async (name) => {
-  console.log(name)
-  return await UserModel.find({ name: name })
+  return await UserModel.find({ name: new RegExp(`^${name}`, 'i') })
 }
 
 
