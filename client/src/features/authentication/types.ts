@@ -13,7 +13,7 @@ export interface ILoginResponse {
 }
 
 export interface IRegistrationData {
-  username: string;
+  name: string;
   email: string;
   password: string;
 }

@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { loginAPI, refreshTokenAPI, registrationAPI } from "./authApi";
-import { IAuthResponse, ILoginData, ILoginResponse, IRegistrationData } from "./types";
-import { IUser } from "../../utils/types";
-import axios from 'axios';
+import { ILoginData, ILoginResponse, IRegistrationData } from "./types";
+import { IUser } from '../users/types';
 
 interface AuthState {
   isLoading: boolean;
@@ -43,8 +42,8 @@ export const registerUser = createAsyncThunk(
   }
 )
 
-export const startSession = createAsyncThunk(
-  'auth/startSession',
+export const authorizeUser = createAsyncThunk(
+  'auth/',
   async (_data, { rejectWithValue }) => {
     try {
       const response = await refreshTokenAPI()
@@ -63,6 +62,7 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.isAuthenticated = false
       state.user = null
+      localStorage.removeItem('token')
     }
 
   },
@@ -82,10 +82,20 @@ export const authSlice = createSlice({
       state.isLoading = false
       state.isAuthenticated = false
       state.error = action.payload
+      state.user = null
     },
-    [startSession.fulfilled.type]: (state, action) => {
+    [authorizeUser.pending.type]: (state) => {
+      state.isLoading = true
+    },
+    [authorizeUser.fulfilled.type]: (state, action) => {
+      state.isLoading = false
       state.isAuthenticated = true
       state.user = action.payload.user
+    },
+    [authorizeUser.rejected.type]: (state) => {
+      state.isLoading = false
+      state.isAuthenticated = false
+      state.user = null
     }
   }
 })

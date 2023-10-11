@@ -10,7 +10,7 @@ export const registerUser = async ({ name, email, password }) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 3);
-
+  console.log(name)
   const user = await UserModel.create({ name, email, password: hashPassword })
 
   const tokens = tokenService.generateTokens({ ...user });
@@ -30,7 +30,7 @@ export const loginUser = async (email, password) => {
   }
   const tokens = tokenService.generateTokens({ ...user });
 
-  await tokenService.saveToken(user._id, tokens.refreshToken);
+  await tokenService.saveRefreshToken(user._id, tokens.refreshToken);
   return { ...tokens, user }
 }
 

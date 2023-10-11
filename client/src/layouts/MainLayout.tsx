@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import Search from '../features/search/Search'
+import UserMenu from '../features/users/UserMenu'
 
 const MainLayout = () => {
   return (
@@ -8,7 +9,11 @@ const MainLayout = () => {
         <Search />
       </div>
       <div className='container'>
-        <div className='header'></div>
+        <div className='header'>
+          <div className='user-menu-container'>
+            <UserMenu />
+          </div>
+        </div>
         <div className='main'>
           <Outlet />
         </div>
@@ -30,6 +35,12 @@ const MainLayout = () => {
           }
           .header {
             height: 50px;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+          }
+          .user-menu-container {
+            margin-left: auto;  
           }
         `}
       </style>

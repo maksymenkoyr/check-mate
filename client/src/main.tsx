@@ -22,13 +22,13 @@ const router = createBrowserRouter([
         element: <MainLayout />,
         children: [
           {
-            index: true,
+            path: ':userId',
             element: <UserView />,
           },
         ],
       },
       {
-        path: '/login/',
+        path: '/login',
         element: (
           <AuthPage userHasAccount>
             <LoginForm />
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/registration/',
+        path: '/registration',
         element: (
           <AuthPage>
             <RegistrationForm />

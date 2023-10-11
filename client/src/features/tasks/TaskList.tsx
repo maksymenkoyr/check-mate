@@ -3,13 +3,13 @@ import { ITask } from './types'
 import { getTasksAPI } from './taskApi'
 import TaskItem from './TaskItem'
 
-const TaskList = () => {
+const TaskList = ({ userId }: { userId: string }) => {
   const [tasks, setTasks] = useState<ITask[]>([])
   useEffect(() => {
-    getTasksAPI().then(res => {
+    getTasksAPI(userId).then(res => {
       setTasks(res.data)
     })
-  }, [])
+  }, [userId])
   return (
     <div>
       {tasks.map(task => (

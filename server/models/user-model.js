@@ -13,4 +13,4 @@ userSchema.path('name').validate(async (value) => {
   return !nameCount;
 }, 'name already exists');
 
-export default mongoose.model('User', userSchema)
+export default mongoose.model('User', userSchema) 

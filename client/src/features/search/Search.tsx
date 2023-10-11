@@ -20,7 +20,7 @@ function Search() {
           className='search-input'
           placeholder='Search...'
           onChange={handleInputChange}
-          onBlur={() => setShowDropdown(false)}
+          // onBlur={() => setShowDropdown(false)}
           onFocus={() => setShowDropdown(true)}
         />
         {showDropdown ? (
