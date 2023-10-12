@@ -14,7 +14,7 @@ export const addTask = async (req, res, next) => {
 }
 export const getAllTasks = async (req, res, next) => {
   try {
-
+    
     const { userId } = req.query
     const allTasks = await taskService.getAllTasks(userId)
     return res.status(200).json(allTasks)

@@ -14,7 +14,6 @@ const AppRoot = () => {
   if (isLoading) {
     return <>Loading...</>
   }
-  console.log(isAuthenticated)
   if (isAuthenticated) {
     if (location.pathname === '/login' || location.pathname === '/registration') {
       return <Navigate to={`/${user!._id}`} />
