@@ -4,4 +4,9 @@ export interface ITask {
   likes: number
 }
 
+export interface ITaskCreatingData {
+  name: string
+  description: string | null
+}
+
 

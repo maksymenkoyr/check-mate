@@ -2,15 +2,17 @@ import Button from '../../components/inputs/Button'
 import TextArea from '../../components/inputs/text-area/TextArea'
 import { useRef, useState } from 'react'
 import { addTaskAPI } from './taskApi'
+import { useAddTaskMutation } from './taskService'
 
 const AddTask = ({ finishAddingTask }: { finishAddingTask: () => void }) => {
+  const [addTask, { isLoading }] = useAddTaskMutation()
   const nameValue = useRef<string>(null)
   const descriptionValue = useRef<string>(null)
 
   const handleSubmit = () => {
     console.log(nameValue.current, descriptionValue.current)
     if (nameValue.current) {
-      addTaskAPI({ name: nameValue.current, description: descriptionValue.current })
+      addTask({ name: nameValue.current, description: descriptionValue.current })
     }
     finishAddingTask()
   }

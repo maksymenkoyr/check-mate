@@ -8,7 +8,12 @@ import { useParams } from 'react-router-dom'
 const TaskList = () => {
   const { userId } = useParams()
   const { data, error, isLoading } = tasksApi.useGetAllTasksQuery(userId)
-  console.log(data)
+  if (isLoading) {
+    return <p>Loading tasks...</p>
+  }
+  if (error) {
+    return <p>Tasks not loaded, try again</p>
+  }
   return <div>{data ? data.map(task => <TaskItem taskData={task}></TaskItem>) : null}</div>
 }
 
