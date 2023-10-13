@@ -1,24 +1,22 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 import { API_URL } from "./api";
 
-export const baseQuery = fetchBaseQuery({
+const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
+  credentials: "include",
+  prepareHeaders: (headers) => {
+    headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
+    return headers
+  }
+
 })
 
-export const baseQueryWithAuth: (baseUrl: string) => BaseQueryFn<
+export const baseQueryWithAuth: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
-> = (baseUrl) => async (args, api, extraOptions) => {
-  const baseQuery = fetchBaseQuery({
-    baseUrl: API_URL.concat(baseUrl),
-    credentials: "include",
-    prepareHeaders: (headers) => {
-      headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
-      return headers
-    }
+> = async (args, api, extraOptions) => {
 
-  })
   let result = await baseQuery(args, api, extraOptions)
 
   if (result.error && result.error.status === 401) {

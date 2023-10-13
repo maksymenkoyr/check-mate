@@ -10,7 +10,7 @@ import { login, refresh, registration } from './controllers/auth-controller.js'
 import { body } from 'express-validator'
 import cookieParser from 'cookie-parser'
 import { taskRouter } from './controllers/task-controller.js'
-import { usersRouter } from './controllers/users-controller.js'
+import { searchRouter } from './controllers/search-controller.js'
 import authMiddleware from './middlewares/auth-middleware.js'
 
 app.use(cors({
@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }))
 app.post('/api/login', body('email').isEmail(), body('password').isLength({ min: 4 }), login)
 app.post('/api/registration', body('email').isEmail(), body('password').isLength({ min: 4 }), body('name').notEmpty(), registration)
 app.use('/api/tasks', taskRouter)
-app.use('/api/users', usersRouter)
+app.use('/api/search', searchRouter)
 app.get('/api/refresh', refresh)
 app.get('/api/auth', authMiddleware, refresh)
 

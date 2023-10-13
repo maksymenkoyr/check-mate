@@ -12,6 +12,6 @@ export const searchUserByName = async (req, res, next) => {
   }
 }
 
-export const usersRouter = Router()
+export const searchRouter = Router()
 
-usersRouter.get('/', searchUserByName)
+searchRouter.get('/', searchUserByName)

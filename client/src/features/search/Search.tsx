@@ -1,17 +1,15 @@
-import { useState, useEffect } from 'react'
-import { searchUserByName } from './searchApi'
-import { IUser } from '../users/types'
+import { useState } from 'react'
 import UserPreview from '../users/UserPreview'
+import { useGetAllUsersByNameMutation } from './searchService'
 function Search() {
-  const [results, setResults] = useState<IUser[]>([])
   const [showDropdown, setShowDropdown] = useState(false)
+  const [getAllUsersByName, { data, error, isLoading }] = useGetAllUsersByNameMutation()
 
   const handleInputChange = e => {
     setShowDropdown(true)
     const value = e.target.value
-    searchUserByName(value).then(res => setResults(res.data))
+    getAllUsersByName(value)
   }
-
   return (
     <>
       <div className='search-container'>
@@ -25,9 +23,11 @@ function Search() {
         />
         {showDropdown ? (
           <ul className='search-dropdown'>
-            {results.map(user => (
-              <UserPreview user={user} />
-            ))}
+            {isLoading || !data || error ? (
+              <p>loading</p>
+            ) : (
+              data.map(user => <UserPreview user={user} />)
+            )}
           </ul>
         ) : null}
       </div>
