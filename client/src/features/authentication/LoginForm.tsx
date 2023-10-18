@@ -3,8 +3,7 @@ import { useForm } from 'react-hook-form'
 import TextInput from '../../components/inputs/TextInput'
 import Button from '../../components/inputs/Button'
 import { forms } from '../../variables/vocabulary'
-import { authSlice, loginUser } from './authService'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { useLoginMutation } from './auth-service'
 import { ILoginData } from './types'
 
 export interface LoginForm {
@@ -12,15 +11,14 @@ export interface LoginForm {
   password: string
 }
 const LoginForm = () => {
-  const dispatch = useAppDispatch()
-  // const auth = useAppSelector(state => state.authReducer)
+  const [registerUser] = useLoginMutation()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>()
   const onSubmit = (data: ILoginData) => {
-    dispatch(loginUser(data))
+    registerUser(data)
   }
   return (
     <form className='form' onSubmit={handleSubmit(onSubmit)}>
@@ -68,3 +66,4 @@ const LoginForm = () => {
 }
 
 export default LoginForm
+

@@ -13,7 +13,6 @@ export default function (req, res, next) {
     if (!accessToken) {
       return next(ApiError.UnauthorizedError());
     }
-
     const userData = tokenService.validateAccessToken(accessToken)._doc;
     if (!userData) {
       return next(ApiError.UnauthorizedError());
@@ -22,6 +21,6 @@ export default function (req, res, next) {
     req.user = userData;
     next();
   } catch (e) {
-    return next(ApiError.UnauthorizedError());
+    return next(ApiError.UnauthorizedError(e));
   }
 };

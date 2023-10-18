@@ -5,6 +5,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   credentials: "include",
   prepareHeaders: (headers) => {
+    console.log(localStorage.getItem('token'))
     headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
     return headers
   }
@@ -21,10 +22,10 @@ export const baseQueryWithAuth: BaseQueryFn<
 
   if (result.error && result.error.status === 401) {
     const refreshResult = await baseQuery({
-      url: '/refresh',
+      url: '/auth/refresh',
     }, api, extraOptions)
-    if (refreshResult.data?.refreshToken) {
-      localStorage.setItem('token', refreshResult.data.refreshToken);
+    if (refreshResult.data?.accessToken) {
+      localStorage.setItem('token', refreshResult.data.accessToken);
       result = await baseQuery(args, api, extraOptions)
 
     }

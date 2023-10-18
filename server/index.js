@@ -6,12 +6,11 @@ const app = express()
 const port = process.env.PORT
 const dbUrl = process.env.DB_URL;
 import errorMiddleware from './middlewares/error-middleware.js'
-import { login, refresh, registration } from './controllers/auth-controller.js'
-import { body } from 'express-validator'
+import { authRouter, login, refresh, registration } from './controllers/auth-controller.js'
+
 import cookieParser from 'cookie-parser'
 import { taskRouter } from './controllers/task-controller.js'
 import { searchRouter } from './controllers/search-controller.js'
-import authMiddleware from './middlewares/auth-middleware.js'
 
 app.use(cors({
   credentials: true,
@@ -20,13 +19,9 @@ app.use(cors({
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.post('/api/login', body('email').isEmail(), body('password').isLength({ min: 4 }), login)
-app.post('/api/registration', body('email').isEmail(), body('password').isLength({ min: 4 }), body('name').notEmpty(), registration)
 app.use('/api/tasks', taskRouter)
 app.use('/api/search', searchRouter)
-app.get('/api/refresh', refresh)
-app.get('/api/auth', authMiddleware, refresh)
-
+app.use('/api/auth', authRouter)
 app.use(errorMiddleware)
 
 const startServer = async () => {

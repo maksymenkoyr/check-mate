@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import UserPreview from './UserPreview'
 import Button from '../../components/inputs/Button'
-import { authSlice } from '../authentication/authService'
+import { logout } from '../authentication/auth-service'
 
 const UserMenu = () => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
@@ -19,7 +19,7 @@ const UserMenu = () => {
           <UserPreview user={user} />
           {showDropdown ? (
             <div className='dropdown'>
-              <Button onClick={() => dispatch(authSlice.actions.logout())}>Log out</Button>
+              <Button onClick={() => dispatch(logout())}>Log out</Button>
             </div>
           ) : null}
         </div>

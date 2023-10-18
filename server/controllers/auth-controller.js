@@ -1,6 +1,9 @@
+import { Router } from 'express';
+import authMiddleware from '../middlewares/auth-middleware';
 import { loginUser, logoutUser, refreshUserToken, registerUser } from '../services/user-service';
 import ApiError from '../utils/api-error';
 import { validationResult } from 'express-validator';
+import { body } from 'express-validator'
 
 
 export const registration = async (req, res, next) => {
@@ -10,7 +13,6 @@ export const registration = async (req, res, next) => {
       throw ApiError.BadRequest('validation error', errors.array())
     }
     const registrationData = req.body;
-    console.log(registrationData)
     const userData = await registerUser(registrationData);
     res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
     return res.json(userData);
@@ -20,7 +22,6 @@ export const registration = async (req, res, next) => {
 }
 
 export const login = async (req, res, next) => {
-
   try {
     const { email, password } = req.body;
     const userData = await loginUser(email, password);
@@ -58,9 +59,15 @@ export const refresh = async (req, res, next) => {
 export const authorizeUser = async (req, res, next) => {
   try {
     const userData = req.user;
-    return res.json(userData);
+    return res.json({ user: userData });
   } catch (e) {
     next(e);
   }
 }
 
+export const authRouter = Router()
+
+authRouter.get('/', authMiddleware, authorizeUser)
+authRouter.post('/login', body('email').isEmail(), body('password').isLength({ min: 4 }), login)
+authRouter.post('/registration', body('email').isEmail(), body('password').isLength({ min: 4 }), body('name').notEmpty(), registration)
+authRouter.get('/refresh', refresh)

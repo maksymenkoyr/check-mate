@@ -1,25 +1,28 @@
 import { useEffect } from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from './hooks/redux'
-import { authorizeUser } from './features/authentication/authService'
+import { useAppSelector } from './hooks/redux'
+import { useAuthenticateMutation } from './features/authentication/auth-service'
 
 const AppRoot = () => {
-  const dispatch = useAppDispatch()
   const location = useLocation()
-  const { isLoading, isAuthenticated, user } = useAppSelector(state => state.authReducer)
+  const { isAuthenticated, user } = useAppSelector(state => state.authReducer)
+  const [authenticate, { isLoading }] = useAuthenticateMutation()
   useEffect(() => {
-    if (!isAuthenticated && localStorage.getItem('token')) dispatch(authorizeUser())
+    if (!isAuthenticated && localStorage.getItem('token')) {
+      authenticate()
+    }
   }, [])
+
 
   if (isLoading) {
     return <>Loading...</>
   }
-  if (isAuthenticated) {
+  if (isAuthenticated && user) {
     if (location.pathname === '/login' || location.pathname === '/registration') {
-      return <Navigate to={`/${user!._id}`} />
+      return <Navigate to={`/${user._id}`} />
     }
     if (location.pathname === '/') {
-      return <Navigate to={`/${user!._id}`} />
+      return <Navigate to={`/${user._id}`} />
     }
   } else {
     if (location.pathname !== '/login' && location.pathname !== '/registration') {

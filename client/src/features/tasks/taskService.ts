@@ -4,7 +4,7 @@ import { baseApi } from '../../store/api';
 
 export const tasksApi = baseApi
   .enhanceEndpoints({
-   
+    addTagTypes: ['Tasks']
   })
   .injectEndpoints({
     endpoints: builder => ({

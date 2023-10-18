@@ -5,7 +5,6 @@ export const searchUserByName = async (req, res, next) => {
   try {
     const name = req.query.name
     const allUsers = await findAllUsersByName(name)
-    console.log(allUsers)
     return res.status(200).send(allUsers)
   } catch (error) {
     next(error)

@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form'
 import TextInput from '../../components/inputs/TextInput'
 import Button from '../../components/inputs/Button'
 import { forms } from '../../variables/vocabulary'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { useAppSelector } from '../../hooks/redux'
 import { IRegistrationData } from './types'
-import { registerUser } from './authService'
+import { useRegisterMutation } from './auth-service'
 
 const RegistrationForm = () => {
-  const dispatch = useAppDispatch()
+  const [registerUser] = useRegisterMutation()
   const auth = useAppSelector(state => state.authReducer)
   console.log(auth)
   const {
@@ -16,8 +16,8 @@ const RegistrationForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IRegistrationData>()
-  const onSubmit = (data: IRegistrationData) => {
-    dispatch(registerUser({ ...data }))
+  const onSubmit = (registrationData: IRegistrationData) => {
+    registerUser(registrationData)
   }
   return (
     <form className='form' onSubmit={handleSubmit(onSubmit)}>
