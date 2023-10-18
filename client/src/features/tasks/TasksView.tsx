@@ -6,14 +6,14 @@ import Button from '../../components/inputs/Button'
 import TaskList from './TaskList'
 import AddTask from './AddTask'
 
-const TasksView = ({ userId }: { userId: string }) => {
+const TasksView = ({ userId, isCurrentUser }: { userId: string; isCurrentUser: boolean }) => {
   const [addTask, setAddTask] = useState<boolean>(false)
 
   return (
     <>
       {addTask ? <AddTask finishAddingTask={() => setAddTask(false)} /> : null}
-      <TaskList userId={userId}/>
-      <Button onClick={() => setAddTask(true)}> AddTask </Button>
+      <TaskList userId={userId} />
+      {isCurrentUser ? <Button onClick={() => setAddTask(true)}> AddTask </Button> : null}
     </>
   )
 }

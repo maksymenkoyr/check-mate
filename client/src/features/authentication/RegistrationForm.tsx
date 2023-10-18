@@ -9,8 +9,6 @@ import { useRegisterMutation } from './auth-service'
 
 const RegistrationForm = () => {
   const [registerUser] = useRegisterMutation()
-  const auth = useAppSelector(state => state.authReducer)
-  console.log(auth)
   const {
     register,
     handleSubmit,

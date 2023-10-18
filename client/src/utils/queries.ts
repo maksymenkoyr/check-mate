@@ -5,7 +5,6 @@ const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   credentials: "include",
   prepareHeaders: (headers) => {
-    console.log(localStorage.getItem('token'))
     headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
     return headers
   }

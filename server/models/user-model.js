@@ -8,9 +8,4 @@ const userSchema = new mongoose.Schema({
   friends: [{ type: Schema.Types.ObjectId, ref: 'Friend' }]
 })
 
-userSchema.path('name').validate(async (value) => {
-  const nameCount = await mongoose.models.User.countDocuments({ name: value });
-  return !nameCount;
-}, 'name already exists');
-
 export default mongoose.model('User', userSchema) 

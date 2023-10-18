@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import authMiddleware from '../middlewares/auth-middleware';
-import { loginUser, logoutUser, refreshUserToken, registerUser } from '../services/user-service';
+import { userService } from '../services/user-service';
 import ApiError from '../utils/api-error';
 import { validationResult } from 'express-validator';
 import { body } from 'express-validator'
@@ -13,7 +13,7 @@ export const registration = async (req, res, next) => {
       throw ApiError.BadRequest('validation error', errors.array())
     }
     const registrationData = req.body;
-    const userData = await registerUser(registrationData);
+    const userData = await userService.registerUser(registrationData);
     res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
     return res.json(userData);
   } catch (e) {
@@ -24,7 +24,7 @@ export const registration = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const userData = await loginUser(email, password);
+    const userData = await userService.loginUser(email, password);
     res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
     return res.json(userData);
   } catch (e) {
@@ -35,7 +35,7 @@ export const login = async (req, res, next) => {
 export const logout = async (req, res, next) => {
   try {
     const { refreshToken } = req.cookies;
-    const token = await logoutUser(refreshToken);
+    const token = await userService.logoutUser(refreshToken);
     res.clearCookie('refreshToken');
     return res.json(token);
   } catch (e) {
@@ -48,7 +48,7 @@ export const logout = async (req, res, next) => {
 export const refresh = async (req, res, next) => {
   try {
     const { refreshToken } = req.cookies;
-    const userData = await refreshUserToken(refreshToken);
+    const userData = await userService.refreshUserToken(refreshToken);
     res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
     return res.json(userData);
   } catch (e) {

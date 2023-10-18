@@ -5,8 +5,7 @@ const TextArea = ({ placeholder, valueRef }) => {
 
   const handleInput = event => {
     const value = event.target.innerText
-    console.log(value)
-
+  
     if (!value) {
       return setShowPLaceholder(true)
     }

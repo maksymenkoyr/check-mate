@@ -6,11 +6,11 @@ const app = express()
 const port = process.env.PORT
 const dbUrl = process.env.DB_URL;
 import errorMiddleware from './middlewares/error-middleware.js'
-import { authRouter, login, refresh, registration } from './controllers/auth-controller.js'
-
+import { authRouter } from './controllers/auth-controller.js'
 import cookieParser from 'cookie-parser'
 import { taskRouter } from './controllers/task-controller.js'
 import { searchRouter } from './controllers/search-controller.js'
+import { usersRouter } from './controllers/user-controller.js'
 
 app.use(cors({
   credentials: true,
@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/tasks', taskRouter)
 app.use('/api/search', searchRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/users', usersRouter )
 app.use(errorMiddleware)
 
 const startServer = async () => {

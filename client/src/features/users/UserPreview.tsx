@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom'
 const UserPreview = ({ user }: { user: IUser }) => {
   return (
     <>
-      <Link to={`/${user._id}`} onClick={() => console.log('click')}>
+      <Link to={`/${user?._id}`} onClick={() => console.log('click')}>
         <div className='container'>
           <div className='avatar'>
             <img src={avatar} alt='Circular Image' style={{ width: '100%' }} />
           </div>
-          <p>{user.name}</p>
+          <p>{user?.name}</p>
         </div>
       </Link>
       <style jsx>

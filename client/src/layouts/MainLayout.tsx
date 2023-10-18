@@ -29,18 +29,21 @@ const MainLayout = () => {
             background-color: lightblue;
           }
           .container {
+            position: relative;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
           }
           .header {
+            position: absolute;
+            right: 0;
             height: 50px;
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
           }
           .user-menu-container {
-            margin-left: auto;  
+            margin-left: auto;
           }
         `}
       </style>

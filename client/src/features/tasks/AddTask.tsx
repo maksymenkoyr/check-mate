@@ -10,7 +10,6 @@ const AddTask = ({ finishAddingTask }: { finishAddingTask: () => void }) => {
   const descriptionValue = useRef<string>(null)
 
   const handleSubmit = () => {
-    console.log(nameValue.current, descriptionValue.current)
     if (nameValue.current) {
       addTask({ name: nameValue.current, description: descriptionValue.current })
     }
