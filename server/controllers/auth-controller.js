@@ -58,8 +58,9 @@ export const refresh = async (req, res, next) => {
 
 export const authorizeUser = async (req, res, next) => {
   try {
-    const userData = req.user;
-    return res.json({ user: userData });
+    const { _id } = req.user;
+    const user = await userService.getUser(_id)
+    return res.json({ user });
   } catch (e) {
     next(e);
   }
