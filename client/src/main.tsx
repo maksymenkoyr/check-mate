@@ -10,8 +10,46 @@ import LoginForm from './features/authentication/LoginForm.tsx'
 import MainLayout from './layouts/MainLayout.tsx'
 import UserView from './features/users/UserView.tsx'
 import AppRoot from './AppRoot.tsx'
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import { colors } from './utils/colors.ts'
+import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 
 const store = setupStore()
+
+const theme = createTheme({
+  components: {
+    MuiTextField: {
+      variants: [
+        {
+          props: { variant: 'outlined' },
+          style: {
+            background: colors.background,
+          },
+        },
+      ],
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
+            border: `1.5px solid ${colors.primary.main}`,
+          },
+        },
+      },
+    },
+  },
+  palette: {
+    mode: 'light',
+    primary: {
+      main: colors.primary.main,
+      contrastText: colors.primary.contrastText,
+    },
+    background: {
+      default: colors.background,
+      paper: colors.surfaces,
+    },
+  },
+})
 
 const router = createBrowserRouter([
   {
@@ -49,8 +87,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <CssBaseline />
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
 )
