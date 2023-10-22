@@ -15,8 +15,13 @@ export const usersApi = baseApi
       addFriend: builder.mutation<void, string>({
         query: (friendId) => ({ url: 'users/add-friend', method: "PATCH", body: { friendId } }),
         invalidatesTags: ['Friends']
+      }),
+      getAllFriends: builder.query<IUser[], void>({
+        query: () => ({ url: 'users/friends' }),
+        providesTags: ['Friends']
       })
+
     })
   })
 
-export const { useGetUserQuery, useAddFriendMutation } = usersApi
+export const { useGetAllFriendsQuery, useGetUserQuery, useAddFriendMutation } = usersApi

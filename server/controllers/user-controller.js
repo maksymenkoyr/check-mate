@@ -25,11 +25,22 @@ const addFriend = async (req, res, next) => {
   }
 }
 
+const getAllFriends = async (req, res, next) => {
+  try {
+    const friends = await userService.getAllFriends(req.user._id)
+    console.log(friends)
+    res.status(200).json(friends)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const usersRouter = Router()
 
 usersRouter.use(authMiddleware)
 usersRouter.get('/', getUser)
 usersRouter.patch('/add-friend', addFriend)
+usersRouter.get('/friends', getAllFriends)
 
 
 
