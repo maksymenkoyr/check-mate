@@ -56,6 +56,10 @@ export const userService = {
   },
   findAllUsersByName: async (name) => {
     return await UserModel.find({ name: new RegExp(`^${name}`, 'i') })
+  },
+  getAllFriends: async function (userId) {
+    const { friends } = await UserModel.findById(userId).populate('friends')
+    return friends
   }
 
 }
