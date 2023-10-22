@@ -1,22 +1,24 @@
 import { Outlet } from 'react-router-dom'
 import Search from '../features/search/Search'
 import UserMenu from '../features/users/UserMenu'
+import { Button } from '@mui/material'
+import { colors } from '../utils/colors'
+import FriendsList from '../features/users/FriendsList'
 
 const MainLayout = () => {
   return (
     <div className='layout-wrapper'>
-      <div className='sidebar'>
+      <div className='sidebar l-sidebar'>
         <Search />
+        <FriendsList />
       </div>
-      <div className='container'>
-        <div className='header'>
-          <div className='user-menu-container'>
-            <UserMenu />
-          </div>
-        </div>
+      <div className='main'>
         <div className='main'>
           <Outlet />
         </div>
+      </div>
+      <div className='sidebar r-sidebar'>
+        <UserMenu />
       </div>
       <style jsx>
         {`
@@ -25,25 +27,16 @@ const MainLayout = () => {
             width: 100%;
             min-height: 100vh;
           }
-          .sidebar {
-            background-color: lightblue;
-          }
-          .container {
-            position: relative;
+          .main {
             flex-grow: 1;
-            display: flex;
-            flex-direction: column;
           }
-          .header {
-            position: absolute;
-            right: 0;
-            height: 50px;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
+          .l-sidebar {
+            background-color: ${colors.background2};
+            width: 250px;
+            padding: 5px;
           }
-          .user-menu-container {
-            margin-left: auto;
+          .r-sidebar {
+            flex-grow: 0.2;
           }
         `}
       </style>
