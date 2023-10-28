@@ -16,7 +16,7 @@ const UserView = () => {
   const [addFriend] = useAddFriendMutation()
   return (
     <>
-      <div className='displayed-user-information'>
+      <div className='header'>
         {isCurrentUser ? null : (
           <div>
             {isLoading ? null : <UserPreview user={data} />}

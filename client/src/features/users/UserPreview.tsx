@@ -1,11 +1,15 @@
 import { IUser } from './types'
 import avatar from '../../assets/default-avatar.jpg'
 import { Link } from 'react-router-dom'
+import { colors } from '../../utils/colors'
 
 const UserPreview = ({ user }: { user: IUser }) => {
   return (
     <>
-      <Link to={`/${user?._id}`} onClick={() => console.log('click')}>
+      <Link
+        to={`/${user?._id}`}
+        onClick={() => console.log('click')}
+        style={{ color: 'inherit', textDecoration: 'inherit' }}>
         <div className='container'>
           <div className='avatar'>
             <img src={avatar} alt='Circular Image' style={{ width: '100%' }} />
@@ -17,18 +21,32 @@ const UserPreview = ({ user }: { user: IUser }) => {
         {`
           .container {
             display: flex;
-            width: 120px;
-            height: 40px;
-            border: 1px solid grey;
-            border-radius: 10px;
-            display: flex;
+            padding-left: 5px;
+            padding-right: 10px;
+            height: 50px;
+            width: 100%;
+            background: ${colors.surfaces};
+            border: 0.5px solid ${colors.border};
+            border-radius: 4px;
             cursor: pointer;
+            transition: transform 0.3s;
+            transition: background-color 0.3s;
+            align-items: center;
+            justify-content: space-between;
+          }
+          .container:hover {
+            background: ${colors.surfacesHover};
+            transform: scale(1.01);
           }
           .avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             overflow: hidden;
+          }
+          a {
+            color: ${colors.primary.contrastText};
+            text-decoration: none;
           }
         `}
       </style>
