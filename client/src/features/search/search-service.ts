@@ -14,5 +14,5 @@ export const searchApi = baseApi
   })
 
 export const {
-  useGetAllUsersByNameMutation
+  useGetAllUsersByNameMutation,
 } = searchApi
