@@ -9,7 +9,6 @@ import errorMiddleware from './middlewares/error-middleware.js'
 import { authRouter } from './controllers/auth-controller.js'
 import cookieParser from 'cookie-parser'
 import { taskRouter } from './controllers/task-controller.js'
-import { searchRouter } from './controllers/search-controller.js'
 import { usersRouter } from './controllers/user-controller.js'
 
 app.use(cors({
@@ -20,9 +19,8 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/api/tasks', taskRouter)
-app.use('/api/search', searchRouter)
 app.use('/api/auth', authRouter)
-app.use('/api/users', usersRouter )
+app.use('/api/users', usersRouter)
 app.use(errorMiddleware)
 
 const startServer = async () => {

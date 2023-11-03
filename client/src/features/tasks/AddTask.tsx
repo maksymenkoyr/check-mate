@@ -1,8 +1,7 @@
-import Button from '../../components/inputs/Button'
 import TextArea from '../../components/inputs/text-area/TextArea'
 import { useRef, useState } from 'react'
-import { addTaskAPI } from './taskApi'
 import { useAddTaskMutation } from './taskService'
+import { Button } from '@mui/material'
 
 const AddTask = ({ finishAddingTask }: { finishAddingTask: () => void }) => {
   const [addTask, { isLoading }] = useAddTaskMutation()

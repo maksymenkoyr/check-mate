@@ -6,7 +6,7 @@ export const searchApi = baseApi
   .injectEndpoints({
     endpoints: builder => ({
       getAllUsersByName: builder.mutation<IUser[], string>({
-        query: name => ({ url: '/search', method: 'GET', params: { name } }),
+        query: name => ({ url: '/users/search', method: 'GET', params: { name } }),
         invalidatesTags: ['SearchResult'],
       }),
     }),

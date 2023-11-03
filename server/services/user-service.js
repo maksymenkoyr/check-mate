@@ -13,7 +13,6 @@ export const userService = {
 
 
     const hashPassword = await bcrypt.hash(password, 3);
-    console.log(name)
     const user = await UserModel.create({ name, email, password: hashPassword })
 
     const tokens = tokenService.generateTokens({ ...user });

@@ -16,6 +16,10 @@ export const usersApi = baseApi
         query: (friendId) => ({ url: 'users/add-friend', method: "PATCH", body: { friendId } }),
         invalidatesTags: ['Friends']
       }),
+      removeFriend: builder.mutation<void, string>({
+        query: (friendId) => ({ url: 'users/remove-friend', method: "PATCH", body: { friendId } }),
+        invalidatesTags: ['Friends']
+      }),
       getAllFriends: builder.query<IUser[], void>({
         query: () => ({ url: 'users/friends' }),
         providesTags: ['Friends']
@@ -24,4 +28,4 @@ export const usersApi = baseApi
     })
   })
 
-export const { useGetAllFriendsQuery, useGetUserQuery, useAddFriendMutation } = usersApi
+export const { useGetAllFriendsQuery, useGetUserQuery, useAddFriendMutation, useRemoveFriendMutation } = usersApi

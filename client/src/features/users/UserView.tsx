@@ -18,15 +18,24 @@ const UserView = () => {
     <>
       <div className='header'>
         {isCurrentUser ? null : (
-          <div>
-            {isLoading ? null : <UserPreview user={data} />}
-            <Button
-              onClick={() => {
-                addFriend(displayedUserId)
-              }}>
-              Be friends
-            </Button>
-          </div>
+          <>
+            <UserPreview mediumSize user={data} />
+            {data?.isFriend ? (
+              <Button
+                onClick={() => {
+                  removeFriend(displayedUserId)
+                }}>
+                stop being friends
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  addFriend(displayedUserId)
+                }}>
+                Be friends
+              </Button>
+            )}
+          </>
         )}
       </div>
       <TasksView isCurrentUser={isCurrentUser} userId={displayedUserId} />
@@ -35,6 +44,10 @@ const UserView = () => {
           .displayed-user-information {
             min-height: 50px;
           }
+          .header {
+            display: flex;
+            justify-content: space-between;
+          }
         `}
       </style>
     </>
@@ -42,3 +55,5 @@ const UserView = () => {
 }
 
 export default UserView
+
+

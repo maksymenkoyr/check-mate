@@ -3,7 +3,7 @@ import avatar from '../../assets/default-avatar.jpg'
 import { Link } from 'react-router-dom'
 import { colors } from '../../utils/colors'
 
-const UserPreview = ({ user }: { user: IUser }) => {
+const UserPreview = ({ user, mediumSize = false }: { user: IUser; mediumSize?: boolean }) => {
   return (
     <>
       <Link
@@ -24,7 +24,7 @@ const UserPreview = ({ user }: { user: IUser }) => {
             padding-left: 5px;
             padding-right: 10px;
             height: 50px;
-            width: 100%;
+            width: ${mediumSize ? '200px' : '100%'};
             background: ${colors.surfaces};
             border: 0.5px solid ${colors.border};
             border-radius: 4px;
@@ -55,3 +55,4 @@ const UserPreview = ({ user }: { user: IUser }) => {
 }
 
 export default UserPreview
+

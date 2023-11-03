@@ -1,5 +1,7 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
-import { API_URL } from "./api";
+
+
+export const API_URL = `http://localhost:3001/api`
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
